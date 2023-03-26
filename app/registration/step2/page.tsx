@@ -17,6 +17,7 @@ import {
 	businessHourDays,
 	checkEmptyInputError,
 	extractBusinessLicenseExceptHyhpen,
+	IBusinessLicenseStatusResponse,
 	makeBusinessHourData,
 	makeImgPath,
 	makeStoreAddress,
@@ -37,22 +38,6 @@ import { step1RequestStore } from 'store/actions/step1Store';
 import { step2ErrorStore, step2RequestStore } from 'store/actions/step2Store';
 import { theme } from 'styles';
 import style from 'styles/style';
-interface IBusinessLicenseStatusResponse {
-	match_cnt: number;
-	request_cnt: number;
-	status_code: string;
-	data: Array<{
-		b_no: string;
-		b_stt: '01' | '02' | '03';
-		b_stt_cd: '01' | '02' | '03';
-		tax_type: string;
-		tax_type_cd: '1' | '2' | '3' | '4' | '5' | '6' | '7';
-		end_dt: string;
-		utcc_yn: 'Y' | 'N';
-		tax_type_change_dt: string;
-		invoice_apply_at: string;
-	}>;
-}
 
 const Step2 = () => {
 	const router = useRouter();
@@ -133,7 +118,7 @@ const Step2 = () => {
 		await handleFindCoords(storePostcodeInputs.address);
 		await makeImgPath(selectedStoreImageBtn, S3ImagePath, setStep2Request);
 
-		if (query.toString() === '') changeModalKey(MODAL_KEY.ON_STORE_REGISTRATION_STEP_CHANGE_CONFIRM_MODAL);
+		if (query?.toString() === '') changeModalKey(MODAL_KEY.ON_STORE_REGISTRATION_STEP_CHANGE_CONFIRM_MODAL);
 		else changeModalKey(MODAL_KEY.ON_STORE_EDIT_COMPLETION_CONFIRM_MODAL);
 	};
 
@@ -144,7 +129,7 @@ const Step2 = () => {
 		router.push(`/registration/step3?id=${step2Response.storeId}`);
 	};
 	const submitEditInputs = async () => {
-		const step2EditResponse = await patchStore({ ...step2Request, id: Number(query.get('storeId')) });
+		const step2EditResponse = await patchStore({ ...step2Request, id: Number(query?.get('storeId')) });
 		router.push(`/mypage/store`);
 	};
 	const handleSelectedStoreImageBtn = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -222,7 +207,7 @@ const Step2 = () => {
 	};
 
 	useEffect(() => {
-		if (data && !isData && query.get('storeId') !== null) {
+		if (data && !isData && query?.get('storeId') !== null) {
 			setInitialValue(data);
 			setIsData(true);
 			if (data?.callNumber !== '' && data?.callNumber !== null) setStoreCallNumber(data.callNumber);

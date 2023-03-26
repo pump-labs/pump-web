@@ -2,9 +2,9 @@
 
 import { StoreRegistrationExitConfirmModal, TextField } from 'components/feature';
 import { LargeBtn, PrivateRoute, StyledLayout, Typography } from 'components/shared';
-import { checkEmptyInputError, saveUserInput } from 'core/storeRegistrationService';
+import { checkEmptyInputError, handlePhoneNumber, saveUserInput } from 'core/storeRegistrationService';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, KeyboardEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import useModalStore, { MODAL_KEY } from 'store/actions/modalStore';
 import { step1ErrorStore, step1RequestStore } from 'store/actions/step1Store';
 import { theme } from 'styles';
@@ -17,23 +17,6 @@ const Step1 = () => {
 	const { setStep1Request } = step1RequestStore();
 	const [customPhoneNum, setCustomPhoneNum] = useState('');
 	const [currentKey, setCurrentKey] = useState('');
-	const handlePhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
-		let newText = e.target.value;
-		const num = /[-0-9]/;
-		if (newText.length > 0 && !num.test(newText[newText.length - 1])) return;
-		if (newText.length > 13) return;
-		if (newText.length === 13) {
-			setCustomPhoneNum(newText.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-		}
-		if (currentKey !== 'Backspace' && (newText.length === 3 || newText.length === 8)) {
-			newText += '-';
-		}
-		setCustomPhoneNum(newText.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-	};
-
-	const checkKey = (e: KeyboardEvent<HTMLInputElement>) => {
-		setCurrentKey(e.key);
-	};
 	const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const checkResult = checkEmptyInputError(e.currentTarget.step1, changeError);
@@ -103,8 +86,10 @@ const Step1 = () => {
 						width="320px"
 						value={customPhoneNum}
 						placeholder="‘-‘ 를 빼고 숫자만 입력해주세요"
-						onChange={handlePhoneNumber}
-						onKeyDown={checkKey}
+						onChange={(e) => {
+							handlePhoneNumber(e, currentKey) && setCustomPhoneNum(handlePhoneNumber(e, currentKey) as string);
+						}}
+						onKeyDown={(e) => setCurrentKey(e.key)}
 					/>
 				</StyledLayout.TextFieldSection>
 				<StyledLayout.FlexBox justifyContent="center" style={{ paddingTop: '16px' }}>

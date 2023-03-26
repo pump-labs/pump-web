@@ -1,6 +1,37 @@
 import { ItemsRequest } from 'hooks/api/items/usePostItems';
-import { MutableRefObject, RefObject } from 'react';
+import { ChangeEvent, MutableRefObject, RefObject } from 'react';
 import { Product } from 'store/actions/productStore';
+
+export interface IBusinessLicenseStatusResponse {
+	match_cnt: number;
+	request_cnt: number;
+	status_code: string;
+	data: Array<{
+		b_no: string;
+		b_stt: '01' | '02' | '03';
+		b_stt_cd: '01' | '02' | '03';
+		tax_type: string;
+		tax_type_cd: '1' | '2' | '3' | '4' | '5' | '6' | '7';
+		end_dt: string;
+		utcc_yn: 'Y' | 'N';
+		tax_type_change_dt: string;
+		invoice_apply_at: string;
+	}>;
+}
+
+export const handlePhoneNumber = (e: ChangeEvent<HTMLInputElement>, currentKey: string) => {
+	let newText = e.target.value;
+	const num = /[-0-9]/;
+	if (newText.length > 0 && !num.test(newText[newText.length - 1])) return;
+	if (newText.length > 13) return;
+	if (newText.length === 13) {
+		return newText.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+	}
+	if (currentKey !== 'Backspace' && (newText.length === 3 || newText.length === 8)) {
+		newText += '-';
+	}
+	return newText.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+};
 
 export const extractBusinessLicenseExceptHyhpen = (businessLicense: string) => {
 	return businessLicense
