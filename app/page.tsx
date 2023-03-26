@@ -101,7 +101,9 @@ const Root = () => {
 
 					<StyledLayout.FlexBox width="480px" height="52px" gap="6px">
 						<StyledLinkBtn
-							href={'/registration/step1'}
+							href={{
+								pathname: '/registration/step1',
+							}}
 							flex={1}
 							border={`1px solid ${theme.colors.primary_010}`}
 							borderradius={'8px'}
@@ -114,7 +116,7 @@ const Root = () => {
 							</Typography>
 						</StyledLinkBtn>
 						<StyledLinkBtn
-							href={SERVICE_INTRODUCE_PDF_LINK}
+							href={{ pathname: SERVICE_INTRODUCE_PDF_LINK }}
 							target={'_blank'}
 							flex={1}
 							border={`1px solid ${theme.colors.gray_002}`}
@@ -127,7 +129,7 @@ const Root = () => {
 								서비스 소개서
 							</Typography>
 						</StyledLinkBtn>
-						<StyledLinkBtn href={SERVICE_APP_STORE_LINK} target={'_blank'} className="!hidden pc:!flex">
+						<StyledLinkBtn href={{ pathname: SERVICE_APP_STORE_LINK }} target={'_blank'} className="!hidden pc:!flex">
 							<Image src={AppStoreDownloadImg} alt="app store" width={156} height={52} />
 						</StyledLinkBtn>
 					</StyledLayout.FlexBox>
@@ -280,7 +282,7 @@ const Root = () => {
 				</h3>
 				<p className="mb-[2rem]  text-body-4 text-gray-6">애플 앱 스토어에서 다운받을 수 있어요.</p>
 
-				<StyledLinkBtn href={SERVICE_APP_STORE_LINK} target={'_blank'}>
+				<StyledLinkBtn href={{ pathname: SERVICE_APP_STORE_LINK }} target={'_blank'}>
 					<Image src={AppStoreDownloadImg} alt="app store" width={156} height={52} />
 				</StyledLinkBtn>
 			</div>

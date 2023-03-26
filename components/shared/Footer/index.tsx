@@ -5,7 +5,7 @@ import React from 'react';
 import theme from 'styles/theme';
 import * as S from './styled';
 
-const REFERCENCE_LINKS = {
+const REFERENCE_LINKS = {
 	SERVICE_INTRODUCE: 'https://pumprefill.notion.site/pumprefill/Pump-8d0eb93581d640799030a34cbff082c0',
 	SERVICE_TERMS: 'https://pumprefill.notion.site/4c15be8a033e4d5ba1f413712d2e4aff',
 	SERVICE_POLICY: 'https://pumprefill.notion.site/d8dc6eba03a5432c98d618f03508aa24',
@@ -21,19 +21,19 @@ const Footer = () => {
 			<StyledLayout.SubMaxContainer>
 				<S.InnerWrapper display={'flex'} flexDirection={'column'} width={'100%'}>
 					<S.LinkContentsWrapper>
-						<S.Anchor href={REFERCENCE_LINKS.SERVICE_INTRODUCE} target="_blank" rel="noreferrer">
+						<S.Anchor href={{ pathname: REFERENCE_LINKS.SERVICE_INTRODUCE }} target="_blank" rel="noreferrer">
 							<Typography variant="span" aggressive="body_oneline_003" color={theme.colors.gray_006}>
 								서비스 소개
 							</Typography>
 						</S.Anchor>
 						<Divider direction="vertical" width="18px" height="1px" margin="0 10px 0 10px" color="#D9D9D9" />
-						<S.Anchor href={REFERCENCE_LINKS.SERVICE_TERMS} target="_blank" rel="noreferrer">
+						<S.Anchor href={{ pathname: REFERENCE_LINKS.SERVICE_TERMS }} target="_blank" rel="noreferrer">
 							<Typography variant="span" aggressive="body_oneline_003" color={theme.colors.gray_006}>
 								서비스 이용약관
 							</Typography>
 						</S.Anchor>
 						<Divider direction="vertical" width="18px" height="1px" margin="0 10px 0 10px" color="#D9D9D9" />
-						<S.Anchor href={REFERCENCE_LINKS.SERVICE_POLICY} target="_blank" rel="noreferrer">
+						<S.Anchor href={{ pathname: REFERENCE_LINKS.SERVICE_POLICY }} target="_blank" rel="noreferrer">
 							<Typography variant="span" aggressive="tab_001" color={theme.colors.gray_006}>
 								개인정보 처리방침
 							</Typography>
@@ -48,7 +48,7 @@ const Footer = () => {
 					</Typography>
 
 					<S.ChannelWrapper>
-						<S.Anchor href={SOCIAL_LINKS.INSTAGRAM} target="_blank" rel="noreferrer">
+						<S.Anchor href={{ pathname: SOCIAL_LINKS.INSTAGRAM }} target="_blank" rel="noreferrer">
 							<InstagramIcon className="social" />
 						</S.Anchor>
 					</S.ChannelWrapper>

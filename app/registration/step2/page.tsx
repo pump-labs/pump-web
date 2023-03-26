@@ -133,7 +133,7 @@ const Step2 = () => {
 		await handleFindCoords(storePostcodeInputs.address);
 		await makeImgPath(selectedStoreImageBtn, S3ImagePath, setStep2Request);
 
-		if (query.toString() === '') changeModalKey(MODAL_KEY.ON_STORE_REGISTRATION_STEP_CHANGE_CONFIRM_MODAL);
+		if (query?.toString() === '') changeModalKey(MODAL_KEY.ON_STORE_REGISTRATION_STEP_CHANGE_CONFIRM_MODAL);
 		else changeModalKey(MODAL_KEY.ON_STORE_EDIT_COMPLETION_CONFIRM_MODAL);
 	};
 
@@ -144,7 +144,7 @@ const Step2 = () => {
 		router.push(`/registration/step3?id=${step2Response.storeId}`);
 	};
 	const submitEditInputs = async () => {
-		const step2EditResponse = await patchStore({ ...step2Request, id: Number(query.get('storeId')) });
+		const step2EditResponse = await patchStore({ ...step2Request, id: Number(query?.get('storeId')) });
 		router.push(`/mypage/store`);
 	};
 	const handleSelectedStoreImageBtn = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -222,7 +222,7 @@ const Step2 = () => {
 	};
 
 	useEffect(() => {
-		if (data && !isData && query.get('storeId') !== null) {
+		if (data && !isData && query?.get('storeId') !== null) {
 			setInitialValue(data);
 			setIsData(true);
 			if (data?.callNumber !== '' && data?.callNumber !== null) setStoreCallNumber(data.callNumber);
@@ -552,7 +552,7 @@ const Step2 = () => {
 					</StyledLayout.FlexBox>
 				</StyledLayout.TextFieldSection>
 				<StyledLayout.FlexBox justifyContent="center" style={{ paddingTop: '16px' }}>
-					{query.get('isReady') === null ? (
+					{query?.get('isReady') === null ? (
 						<LargeBtn type="submit" style={style.btnStyle.primary_btn_002}>
 							다음단계
 						</LargeBtn>
