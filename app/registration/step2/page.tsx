@@ -28,6 +28,7 @@ import { patchStore } from 'hooks/api/store/usePatchStore';
 import { postStore } from 'hooks/api/store/usePostStore';
 import { patchManager } from 'hooks/api/user/usePatchManager';
 import { useS3Upload } from 'next-s3-upload';
+import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { StoreDefaultImg } from 'public/static/images';
@@ -259,6 +260,10 @@ const Step2 = () => {
 
 	return (
 		<>
+			<Head>
+				<meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+			</Head>
+
 			<form onSubmit={handleOnSubmit}>
 				<StyledLayout.TextFieldSection>
 					<label htmlFor="registrationNumber">
