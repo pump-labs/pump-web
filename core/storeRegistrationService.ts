@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { ItemsRequest } from 'hooks/api/items/usePostItems';
 import { ChangeEvent, MutableRefObject, RefObject } from 'react';
 import { Product } from 'store/actions/productStore';
@@ -18,19 +19,20 @@ export interface IBusinessLicenseStatusResponse {
 		invoice_apply_at: string;
 	}>;
 }
-
-export const handlePhoneNumber = (e: ChangeEvent<HTMLInputElement>, currentKey: string) => {
-	let newText = e.target.value;
-	const num = /[-0-9]/;
-	if (newText.length > 0 && !num.test(newText[newText.length - 1])) return;
-	if (newText.length > 13) return;
-	if (newText.length === 13) {
-		return newText.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-	}
-	if (currentKey !== 'Backspace' && (newText.length === 3 || newText.length === 8)) {
-		newText += '-';
-	}
-	return newText.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+export const handleFindCoords = async (storeAddress: string) => {
+	const location: string[] = [];
+	await axios
+		.get(`https://dapi.kakao.com/v2/local/search/address.json?query=${storeAddress}`, {
+			headers: {
+				Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_MAP_REST_KEY}`, // REST API 키
+			},
+		})
+		.then((res) => {
+			const address = res.data.documents[0].address;
+			location.push(address.x as string);
+			location.push(address.y as string);
+		});
+	return location;
 };
 
 export const extractBusinessLicenseExceptHyhpen = (businessLicense: string) => {

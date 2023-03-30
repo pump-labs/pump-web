@@ -17,6 +17,7 @@ import {
 	businessHourDays,
 	checkEmptyInputError,
 	extractBusinessLicenseExceptHyhpen,
+	handleFindCoords,
 	IBusinessLicenseStatusResponse,
 	makeBusinessHourData,
 	makeImgPath,
@@ -112,10 +113,13 @@ const Step2 = () => {
 			}
 			return;
 		}
+
 		await saveStep2UserInput(e.currentTarget.step2, setStep2Request);
 		await makeBusinessHourData(dayOffRef, selectedBusinessHourBtn, setStep2Request);
 		await makeStoreAddress(storePostcodeInputs, setStep2Request);
-		await handleFindCoords(storePostcodeInputs.address);
+		const coords = await handleFindCoords(storePostcodeInputs.address);
+		setStep2Request('longitude', coords[0]);
+		setStep2Request('latitude', coords[1]);
 		await makeImgPath(selectedStoreImageBtn, S3ImagePath, setStep2Request);
 
 		if (query?.toString() === '') changeModalKey(MODAL_KEY.ON_STORE_REGISTRATION_STEP_CHANGE_CONFIRM_MODAL);
@@ -190,20 +194,6 @@ const Step2 = () => {
 			setS3ImagePath(url);
 		}
 		setInputState('imgPath', 'normal');
-	};
-
-	const handleFindCoords = async (storeAddress: string) => {
-		await axios
-			.get(`https://dapi.kakao.com/v2/local/search/address.json?query=${storeAddress}`, {
-				headers: {
-					Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_MAP_REST_KEY}`, // REST API 키
-				},
-			})
-			.then((res) => {
-				const location = res.data.documents[0];
-				setStep2Request('longitude', location.address.x);
-				setStep2Request('latitude', location.address.y);
-			});
 	};
 
 	useEffect(() => {
@@ -537,7 +527,7 @@ const Step2 = () => {
 					</StyledLayout.FlexBox>
 				</StyledLayout.TextFieldSection>
 				<StyledLayout.FlexBox justifyContent="center" style={{ paddingTop: '16px' }}>
-					{query.get('isReady') === null ? (
+					{query?.get('isReady') === null ? (
 						<LargeBtn type="submit" style={style.btnStyle.primary_btn_002}>
 							다음단계
 						</LargeBtn>
