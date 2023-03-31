@@ -31,6 +31,7 @@ const Step3 = () => {
 	const [temporarySaveToast, setTemporarySaveToast] = useState(false);
 	const submitEditItems = async () => {
 		const request = makeItemsRequest([...baseMakeUp, ...bodyHair, ...detergent, ...ingredient, ...etc]);
+
 		await patchItems(Number(query?.get('storeId')), request);
 
 		changeModalKey(MODAL_KEY.OFF);
@@ -55,6 +56,7 @@ const Step3 = () => {
 		}
 		const request = makeItemsRequest([...baseMakeUp, ...bodyHair, ...detergent, ...ingredient, ...etc]);
 		await temporaryPostItems(Number(query?.get('id')), request);
+
 		setTemporarySaveToast(true);
 		setTimeout(() => setTemporarySaveToast(false), 2000);
 	};
@@ -81,7 +83,9 @@ const Step3 = () => {
 	};
 	const submitData = async () => {
 		const request = makeItemsRequest([...baseMakeUp, ...bodyHair, ...detergent, ...ingredient, ...etc]);
+
 		await postItems(Number(query?.get('id')), request);
+
 		changeModalKey(MODAL_KEY.OFF);
 		router.push('/registration/success');
 	};

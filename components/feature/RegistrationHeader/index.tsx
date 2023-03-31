@@ -3,7 +3,7 @@ import { EmptyBoxDivider } from 'components/shared/styled/layout';
 import * as S from './styled';
 
 type Props = {
-	query: string | null;
+	query?: string | null;
 	pathname: string | null;
 };
 const RegistrationHeader = ({ query, pathname }: Props) => {

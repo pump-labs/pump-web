@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 export type OAuthResponse = {
-	name: string;
+	name: string | null;
 	email: string;
 	imgPath: string;
 	type: string;

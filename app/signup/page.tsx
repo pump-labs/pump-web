@@ -96,7 +96,14 @@ const SignUp = () => {
 		// POST API Call Response Status Code 를 기반으로 분기
 		try {
 			// Success
-			const token = await postJwtTokenByOAuthResponse({ name, email, imgPath, type, oauthType, oauthIdentity });
+			const token = await postJwtTokenByOAuthResponse({
+				name: name === 'null' ? null : name,
+				email,
+				imgPath,
+				type,
+				oauthType,
+				oauthIdentity,
+			});
 			setUserTokenInLocalStorage(token);
 
 			const userSession = await getUserSession();

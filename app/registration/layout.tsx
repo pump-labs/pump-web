@@ -15,7 +15,7 @@ const RegistrationLayout = ({ children }: { children: React.ReactNode }) => {
 					<>{children}</>
 				) : (
 					<>
-						<RegistrationHeader query={query.toString()} pathname={pathname} />
+						<RegistrationHeader query={query?.toString()} pathname={pathname} />
 						<Tab />
 						<StyledLayout.RegistrationContentContainer>{children}</StyledLayout.RegistrationContentContainer>
 					</>

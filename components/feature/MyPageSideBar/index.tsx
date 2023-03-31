@@ -1,11 +1,11 @@
 'use client';
 
-import * as S from './styled';
 import { StyledLayout, Typography } from 'components/shared';
-import { theme } from 'styles';
-import { EmblemKakaoIcon, EmblemNaverIcon } from 'public/static/icons';
 import { usePathname } from 'next/navigation';
+import { EmblemKakaoIcon, EmblemNaverIcon } from 'public/static/icons';
 import useUserSessionStore from 'store/actions/userSessionStore';
+import { theme } from 'styles';
+import * as S from './styled';
 
 const myPageNavigations = [
 	{

@@ -234,6 +234,10 @@ const Step2 = () => {
 
 	return (
 		<>
+			<head>
+				<meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+			</head>
+
 			<form onSubmit={handleOnSubmit}>
 				<StyledLayout.TextFieldSection>
 					<label htmlFor="registrationNumber">
