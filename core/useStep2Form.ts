@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { useGetStore } from 'hooks/api/store/useGetStore';
+import { Store } from 'hooks/api/store/useGetStore';
 import { patchStore } from 'hooks/api/store/usePatchStore';
 import { postStore } from 'hooks/api/store/usePostStore';
 import { patchManager } from 'hooks/api/user/usePatchManager';
 import { useS3Upload } from 'next-s3-upload';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, FormEvent, RefObject, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, RefObject, useRef, useState } from 'react';
 import useModalStore, { MODAL_KEY } from 'store/actions/modalStore';
 import { step1RequestStore } from 'store/actions/step1Store';
 import { step2ErrorStore, step2RequestStore } from 'store/actions/step2Store';
@@ -20,18 +20,14 @@ import {
 	refineStoreBusinessHoursStringToArray,
 	saveStep2UserInput,
 } from './storeRegistrationService';
-
 export const useStep2Form = () => {
 	const router = useRouter();
 	const query = useSearchParams();
 	const num = /[-0-9]/;
-	const { data } = useGetStore(query?.get('storeId'));
-	const [isData, setIsData] = useState(false);
 	const [businessHourValues, setBusinessHourValues] = useState<Array<{ day: string; time: string | null }>>([]);
 	const { step2Request, setStep2Request } = step2RequestStore();
 	const { imgPath, registrationNumber, setInputState, setInitialValue } = step2ErrorStore();
 	const { modalKey, changeModalKey } = useModalStore();
-	const [complete, setComplete] = useState({ managerId: -1, storeId: -1 });
 	const [storePostcodeInputs, setStorePostcodeInputs] = useState({
 		address: '', // 기본 주소
 		detailAddress: '', // 상세 주소
@@ -46,7 +42,28 @@ export const useStep2Form = () => {
 	const [selectedBusinessHourBtn, setSelectedBusinessHourBtn] = useState('weekDaysWeekEnd');
 	const { step1Request } = step1RequestStore();
 	const { uploadToS3 } = useS3Upload();
-
+	const setData = (data: Store | null | undefined) => {
+		if (data && query?.get('storeId') !== null) {
+			setInitialValue(data);
+			if (data?.callNumber !== '' && data?.callNumber !== null) setStoreCallNumber(data.callNumber);
+			if (data?.businessHour !== null && data?.businessHour !== '') {
+				setBusinessHourValues(refineStoreBusinessHoursStringToArray(data?.businessHour));
+				setSelectedBusinessHourBtn('eachDays');
+			}
+			if (data?.imgStore?.length > 0 && data?.imgStore !== null && data?.imgStore !== undefined) {
+				setClientStoreImageURL(data?.imgStore[0]?.path ?? '');
+				setS3ImagePath(data?.imgStore[0]?.path ?? '');
+				setSelectedStoreImageBtn('registerImage');
+			}
+			if (data?.address !== '' && data?.address !== null) {
+				setStorePostcodeInputs({
+					address: data?.address?.split('#')[0] ?? '',
+					detailAddress: data?.address?.split('#')[1] ?? '',
+				});
+			}
+			if (data?.callNumber !== '' && data?.callNumber !== null) setStoreCallNumber(data?.callNumber ?? '');
+		}
+	};
 	const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const emptyInput = checkEmptyInputError(e.currentTarget.step2, setInputState);
@@ -94,11 +111,16 @@ export const useStep2Form = () => {
 		if (query?.toString() === '') changeModalKey(MODAL_KEY.ON_STORE_REGISTRATION_STEP_CHANGE_CONFIRM_MODAL);
 		else changeModalKey(MODAL_KEY.ON_STORE_EDIT_COMPLETION_CONFIRM_MODAL);
 	};
+	const handleCallNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const newText = e.target.value;
+		const num = /[-0-9 ]/;
+		if (newText.length > 0 && !num.test(newText[newText.length - 1])) return;
 
+		setStoreCallNumber(e.target.value);
+	};
 	const submitInputs = async () => {
-		const step1Response = await patchManager(step1Request);
+		await patchManager(step1Request);
 		const step2Response = await postStore(step2Request);
-		setComplete({ managerId: step1Response?.id ?? -1, storeId: step2Response.storeId });
 		router.push(`/registration/step3?id=${step2Response.storeId}`);
 	};
 	const submitEditInputs = async () => {
@@ -164,41 +186,35 @@ export const useStep2Form = () => {
 		}
 		setInputState('imgPath', 'normal');
 	};
-
-	useEffect(() => {
-		if (data && !isData && query?.get('storeId') !== null) {
-			setInitialValue(data);
-			setIsData(true);
-			if (data?.callNumber !== '' && data?.callNumber !== null) setStoreCallNumber(data.callNumber);
-			if (data?.businessHour !== null && data?.businessHour !== '') {
-				setBusinessHourValues(refineStoreBusinessHoursStringToArray(data?.businessHour));
-				setSelectedBusinessHourBtn('eachDays');
-			}
-			if (data?.imgStore?.length > 0 && data?.imgStore !== null && data?.imgStore !== undefined) {
-				setClientStoreImageURL(data?.imgStore[0]?.path ?? '');
-				setS3ImagePath(data?.imgStore[0]?.path ?? '');
-				setSelectedStoreImageBtn('registerImage');
-			}
-			if (data?.address !== '' && data?.address !== null) {
-				setStorePostcodeInputs({
-					address: data?.address?.split('#')[0] ?? '',
-					detailAddress: data?.address?.split('#')[1] ?? '',
-				});
-			}
-			if (data?.callNumber !== '' && data?.callNumber !== null) setStoreCallNumber(data?.callNumber ?? '');
-		}
-	}, [data]);
-	useEffect(() => {
-		const newDayOff: boolean[] = [];
-		newDayOff.push(false);
-		if (businessHourValues.length > 0) {
-			for (let i = 0; i < businessHourValues.length; i++) {
-				if (businessHourValues[i].time === 'null') {
-					newDayOff.push(true);
-				} else newDayOff.push(false);
-			}
-			setDayOffStatus(newDayOff);
-		}
-	}, [businessHourValues]);
-	return {};
+	return {
+		businessHourValues,
+		query,
+		handleUploadToClient,
+		handleBusinessLicenseStatusCheck,
+		handleTimePickerInput,
+		handleStoreAddressDetailChange,
+		handleExtractedPostCode,
+		submitInputs,
+		imgPath,
+		registrationNumber,
+		setInputState,
+		handleOnSubmit,
+		businessLicenseInputRef,
+		handleSelectedBusinessHourBtn,
+		handleCallNumber,
+		setClientStoreImageURL,
+		setDayOffStatus,
+		storeCallNumber,
+		handleSelectedStoreImageBtn,
+		storePostcodeInputs,
+		clientStoreImageURL,
+		selectedStoreImageBtn,
+		dayOffStatus,
+		selectedBusinessHourBtn,
+		changeModalKey,
+		dayOffRef,
+		setData,
+		modalKey,
+		submitEditInputs,
+	};
 };

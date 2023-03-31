@@ -10,16 +10,7 @@ import style from 'styles/style';
 
 const Step1 = () => {
 	const { name, email, phoneNumber, changeNormal, changeFormNormal } = step1ErrorStore();
-	const {
-		modalKey,
-		changeModalKey,
-		customPhoneNum,
-		setCurrentKey,
-		currentKey,
-		setCustomPhoneNum,
-		handleOnSubmit,
-		handlePhoneNumber,
-	} = useStep1Form();
+	const { modalKey, changeModalKey, customPhoneNum, setCurrentKey, handleOnSubmit, handlePhoneNumber } = useStep1Form();
 	return (
 		<>
 			<form onSubmit={handleOnSubmit}>
