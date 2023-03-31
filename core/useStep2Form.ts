@@ -29,19 +29,7 @@ export const useStep2Form = () => {
 	const [isData, setIsData] = useState(false);
 	const [businessHourValues, setBusinessHourValues] = useState<Array<{ day: string; time: string | null }>>([]);
 	const { step2Request, setStep2Request } = step2RequestStore();
-	const {
-		name,
-		notice,
-		basicAddress,
-		addressDetail,
-		imgPath,
-		instaAccount,
-		callNumber,
-		registrationNumber,
-		setInputState,
-		setInitialValue,
-		setInputValue,
-	} = step2ErrorStore();
+	const { imgPath, registrationNumber, setInputState, setInitialValue } = step2ErrorStore();
 	const { modalKey, changeModalKey } = useModalStore();
 	const [complete, setComplete] = useState({ managerId: -1, storeId: -1 });
 	const [storePostcodeInputs, setStorePostcodeInputs] = useState({
@@ -212,4 +200,5 @@ export const useStep2Form = () => {
 			setDayOffStatus(newDayOff);
 		}
 	}, [businessHourValues]);
+	return {};
 };

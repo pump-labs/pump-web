@@ -59,7 +59,6 @@ const Step2 = () => {
 		registrationNumber,
 		setInputState,
 		setInitialValue,
-		setInputValue,
 	} = step2ErrorStore();
 	const { modalKey, changeModalKey } = useModalStore();
 	const [complete, setComplete] = useState({ managerId: -1, storeId: -1 });

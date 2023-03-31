@@ -10,7 +10,7 @@ export interface ItemsPostResponse extends APIResponse {
 }
 
 export type ItemsRequest = {
-	id: number;
+	id?: number;
 	title: string | null;
 	brand: string | null;
 	category: string;

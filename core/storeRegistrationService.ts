@@ -156,7 +156,19 @@ export const makeItemsRequest = (itemsArr: Product[]) => {
 	}
 	return itemsRequest;
 };
-
+export const makeItemsEditRequest = (itemsArr: Product[]) => {
+	const itemsRequest: ItemsRequest[] = [];
+	for (let i = 0; i < itemsArr.length; i++) {
+		const cur = itemsArr[i];
+		if (cur.brandName === '' && cur.productName === '') continue;
+		itemsRequest.push({
+			title: cur.productName !== '' ? cur.productName : null,
+			category: cur.category,
+			brand: cur.brandName !== '' ? cur.brandName : null,
+		});
+	}
+	return itemsRequest;
+};
 type StoreBusinessHour = {
 	day?: string;
 	time?: string;

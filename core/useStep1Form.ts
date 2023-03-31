@@ -36,7 +36,6 @@ export const useStep1Form = () => {
 		await saveUserInput(e.currentTarget.step1, setStep1Request);
 		router.replace('/registration/step2');
 	};
-	// 훅을 사용하는 쪽에 제공하는 api다
 	return {
 		modalKey,
 		changeModalKey,

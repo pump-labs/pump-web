@@ -9,7 +9,7 @@ import {
 } from 'components/feature';
 import ProductInfoElement from 'components/feature/ProductInfoElement';
 import { LargeBtn, StyledLayout, Toast, Typography } from 'components/shared';
-import { makeItemsRequest } from 'core/storeRegistrationService';
+import { makeItemsEditRequest, makeItemsRequest } from 'core/storeRegistrationService';
 import { useGetItems } from 'hooks/api/items/useGetItems';
 import { patchItems } from 'hooks/api/items/usePatchItems';
 import { postItems } from 'hooks/api/items/usePostItems';
@@ -30,10 +30,8 @@ const Step3 = () => {
 	const { modalKey, changeModalKey } = useModalStore();
 	const [temporarySaveToast, setTemporarySaveToast] = useState(false);
 	const submitEditItems = async () => {
-		const request = makeItemsRequest([...baseMakeUp, ...bodyHair, ...detergent, ...ingredient, ...etc]);
-
+		const request = await makeItemsEditRequest([...baseMakeUp, ...bodyHair, ...detergent, ...ingredient, ...etc]);
 		await patchItems(Number(query?.get('storeId')), request);
-
 		changeModalKey(MODAL_KEY.OFF);
 		router.push(`/mypage/store`);
 	};
@@ -56,7 +54,6 @@ const Step3 = () => {
 		}
 		const request = makeItemsRequest([...baseMakeUp, ...bodyHair, ...detergent, ...ingredient, ...etc]);
 		await temporaryPostItems(Number(query?.get('id')), request);
-
 		setTemporarySaveToast(true);
 		setTimeout(() => setTemporarySaveToast(false), 2000);
 	};
