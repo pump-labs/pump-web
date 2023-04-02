@@ -178,7 +178,7 @@ const Step2 = () => {
 							name="storeImage"
 							value="defaultImage"
 							onChange={handleSelectedStoreImageBtn}
-							defaultChecked={imgPath.value[0] === ''}
+							defaultChecked={selectedStoreImageBtn === 'defaultImage'}
 						/>
 						<StyledLayout.FlexBox style={{ paddingLeft: '8px' }} gap="8px" flexDirection="column">
 							<label htmlFor="defaultImage">
@@ -200,7 +200,7 @@ const Step2 = () => {
 							name="storeImage"
 							value="registerImage"
 							onChange={handleSelectedStoreImageBtn}
-							defaultChecked={imgPath.value[0] !== ''}
+							defaultChecked={selectedStoreImageBtn === 'registerImage'}
 						/>
 						<StyledLayout.FlexBox style={{ paddingLeft: '8px' }} gap="8px" flexDirection="column">
 							<label htmlFor="registerImage">
