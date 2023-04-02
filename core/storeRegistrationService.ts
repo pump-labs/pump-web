@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ItemsRequest } from 'hooks/api/items/usePostItems';
-import { ChangeEvent, MutableRefObject, RefObject } from 'react';
+import { MutableRefObject, RefObject } from 'react';
 import { Product } from 'store/actions/productStore';
 
 export interface IBusinessLicenseStatusResponse {
@@ -105,19 +105,28 @@ export const makeBusinessHourData = (
 	selectedBusinessHourBtn: string,
 	setFunc: (inputId: string, inputValue: string) => void,
 ) => {
-	const businessHourArr: Array<{ day: string; time: string }> = [];
+	const businessHourArr: Array<{ day: string; time: string | null }> = [];
 	if (selectedBusinessHourBtn === 'weekDaysWeekEnd') {
 		for (let i = 0; i < 5; i++) {
-			businessHourArr.push({ day: businessHourDays[i].day, time: (refArr.current[0] as HTMLButtonElement).value });
+			businessHourArr.push({
+				day: businessHourDays[i].day,
+				time: (refArr.current[0] as HTMLButtonElement).value === 'null' ? null : (refArr.current[0] as HTMLButtonElement).value,
+			});
 		}
 		for (let i = 5; i < 7; i++) {
-			businessHourArr.push({ day: businessHourDays[i].day, time: (refArr.current[1] as HTMLButtonElement).value });
+			businessHourArr.push({
+				day: businessHourDays[i].day,
+				time: (refArr.current[1] as HTMLButtonElement).value === 'null' ? null : (refArr.current[1] as HTMLButtonElement).value,
+			});
 		}
 	} else {
 		for (let i = 0; i < 7; i++) {
 			businessHourArr.push({
 				day: businessHourDays[i].day,
-				time: (refArr.current[businessHourDays[i].id] as HTMLButtonElement).value,
+				time:
+					(refArr.current[businessHourDays[i].id] as HTMLButtonElement).value === 'null'
+						? null
+						: (refArr.current[businessHourDays[i].id] as HTMLButtonElement).value,
 			});
 		}
 	}
