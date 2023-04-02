@@ -29,8 +29,8 @@ export interface Products {
 
 export const productStore = create<Products>()(
 	devtools((set, get) => ({
-		baseMakeUp: [{ id: 0, category: '기초화장 / 세안', brandName: '', productName: '', isProductEmptyError: 'normal' }],
-		bodyHair: [{ id: 0, category: '바디 / 헤어', brandName: '', productName: '', isProductEmptyError: 'normal' }],
+		baseMakeUp: [{ id: 0, category: '기초화장/세안', brandName: '', productName: '', isProductEmptyError: 'normal' }],
+		bodyHair: [{ id: 0, category: '바디/헤어', brandName: '', productName: '', isProductEmptyError: 'normal' }],
 		detergent: [{ id: 0, category: '세제', brandName: '', productName: '', isProductEmptyError: 'normal' }],
 		ingredient: [{ id: 0, category: '식재료', brandName: '', productName: '', isProductEmptyError: 'normal' }],
 		etc: [{ id: 0, category: '기타', brandName: '', productName: '', isProductEmptyError: 'normal' }],
