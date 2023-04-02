@@ -36,7 +36,7 @@ const ConfirmModal = (props: Props) => {
 				</Typography>
 			</p>
 
-			<div className="modal-btn-multi-wrapper">
+			<div className="mt-[3.2rem] flex max-h-[5rem] gap-[0.8rem]">
 				<LargeBtn style={style.btnStyle.white_btn} onClick={props.modalBtn.cancel.onCancel}>
 					{props.modalBtn.cancel.text}
 				</LargeBtn>

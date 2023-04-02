@@ -50,7 +50,7 @@ const nextConfig = {
 		NAVER_CLIENT_ID: process.env.NAVER_CLIENT_ID,
 		NAVER_CLIENT_SECRET: process.env.NAVER_CLIENT_SECRET,
 		BASE_URL: process.env.BASE_URL,
-	}
+	},
 };
 
 module.exports = nextConfig;

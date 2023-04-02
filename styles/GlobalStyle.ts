@@ -3,8 +3,7 @@ import normalize from 'styled-normalize';
 import theme from 'styles/theme';
 
 const GlobalStyle = styled.createGlobalStyle`
-	${normalize};
-
+	${normalize}
 	*,
 	*:after,
 	*:before {

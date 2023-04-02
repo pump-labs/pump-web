@@ -20,16 +20,15 @@ const Header = () => {
 			<StyledLayout.SubMaxContainer>
 				<S.GlobalNavigation className="px-[1rem]">
 					<S.LogoWrapper href={'/'} hrefLang={'ko'}>
-						<span className="visually-hidden">Pump 사이트 로고 이미지</span>
-						<Image src={PumpLogo} alt="Pump Logo" width={110} height={50} priority />
+						<Image src={PumpLogo} alt="Pump 로고 이미지" width={110} height={50} priority />
 					</S.LogoWrapper>
 
-					<StyledLayout.UnorderList gap={'40px'} className="hidden lg:flex">
+					<StyledLayout.UnorderList gap={'40px'} className="!hidden lg:!flex">
 						{!userSession?.id && (
 							<S.NavigationItem>
 								<StyledLayout.LinkWrapper
 									href={{
-										pathname: "'/signin'",
+										pathname: '/signin',
 									}}
 									replace
 								>

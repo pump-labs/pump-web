@@ -1,7 +1,6 @@
 'use client';
 
 import StoreRegistrationWarningInMobile from 'components/feature/Modal/StoreRegistrationWarningInMobile';
-import { StyledLayout } from 'components/shared';
 import { MotionShowBox } from 'components/shared/Motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -191,10 +190,10 @@ const Root = () => {
 				</div>
 			</div>
 
-			<StyledLayout.FlexBox className="mt-[9.6rem] max-w-[99.6rem] flex-col px-[2rem] md:px-[4.8rem] lg:px-0">
+			<div className="mt-[9.6rem] flex max-w-[99.6rem] flex-col px-[2rem] md:px-[4.8rem] lg:px-0">
 				<h3 className="mb-[3.2rem] text-center text-heading-3 text-gray-7">FAQ</h3>
 
-				<StyledLayout.FlexBox className="flex-col items-start gap-[3.2rem]">
+				<div className="flex flex-col items-start gap-[3.2rem]">
 					{FEATURE_FAQ.map((faq) => {
 						const { id, title, description } = faq;
 						return (
@@ -205,8 +204,8 @@ const Root = () => {
 							</div>
 						);
 					})}
-				</StyledLayout.FlexBox>
-			</StyledLayout.FlexBox>
+				</div>
+			</div>
 
 			<div className="mb-[4.8rem] mt-[4.0rem] flex w-full max-w-[99.6rem] px-[2rem] md:mt-[4.8rem] md:mb-[6.4rem] md:px-[4.8rem] lg:px-0">
 				<div className="flex w-full items-center rounded-xl bg-orange-1 p-[2.4rem] md:justify-center md:p-[3.2rem] lg:justify-between">
