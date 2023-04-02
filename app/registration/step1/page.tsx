@@ -2,50 +2,15 @@
 
 import { StoreRegistrationExitConfirmModal, TextField } from 'components/feature';
 import { LargeBtn, PrivateRoute, StyledLayout, Typography } from 'components/shared';
-import { checkEmptyInputError, saveUserInput } from 'core/storeRegistrationService';
-import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, KeyboardEvent, useState } from 'react';
-import useModalStore, { MODAL_KEY } from 'store/actions/modalStore';
-import { step1ErrorStore, step1RequestStore } from 'store/actions/step1Store';
+import { useStep1Form } from 'core/useStep1Form';
+import { MODAL_KEY } from 'store/actions/modalStore';
+import { step1ErrorStore } from 'store/actions/step1Store';
 import { theme } from 'styles';
 import style from 'styles/style';
 
 const Step1 = () => {
-	const router = useRouter();
-	const { modalKey, changeModalKey } = useModalStore();
-	const { name, email, phoneNumber, changeError, changeNormal, changeFormError, changeFormNormal } = step1ErrorStore();
-	const { setStep1Request } = step1RequestStore();
-	const [customPhoneNum, setCustomPhoneNum] = useState('');
-	const [currentKey, setCurrentKey] = useState('');
-	const handlePhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
-		let newText = e.target.value;
-		const num = /[-0-9]/;
-		if (newText.length > 0 && !num.test(newText[newText.length - 1])) return;
-		if (newText.length > 13) return;
-		if (newText.length === 13) {
-			setCustomPhoneNum(newText.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-		}
-		if (currentKey !== 'Backspace' && (newText.length === 3 || newText.length === 8)) {
-			newText += '-';
-		}
-		setCustomPhoneNum(newText.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-	};
-
-	const checkKey = (e: KeyboardEvent<HTMLInputElement>) => {
-		setCurrentKey(e.key);
-	};
-	const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		const checkResult = checkEmptyInputError(e.currentTarget.step1, changeError);
-		if (checkResult[0] !== 0) return;
-		if (checkResult[1]) {
-			changeFormError();
-			return;
-		}
-		await saveUserInput(e.currentTarget.step1, setStep1Request);
-		router.replace('/registration/step2');
-	};
-
+	const { name, email, phoneNumber, changeNormal, changeFormNormal } = step1ErrorStore();
+	const { modalKey, changeModalKey, customPhoneNum, setCurrentKey, handleOnSubmit, handlePhoneNumber } = useStep1Form();
 	return (
 		<>
 			<form onSubmit={handleOnSubmit}>
@@ -104,7 +69,7 @@ const Step1 = () => {
 						value={customPhoneNum}
 						placeholder="‘-‘ 를 빼고 숫자만 입력해주세요"
 						onChange={handlePhoneNumber}
-						onKeyDown={checkKey}
+						onKeyDown={(e) => setCurrentKey(e.key)}
 					/>
 				</StyledLayout.TextFieldSection>
 				<StyledLayout.FlexBox justifyContent="center" style={{ paddingTop: '16px' }}>

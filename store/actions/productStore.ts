@@ -29,16 +29,16 @@ export interface Products {
 
 export const productStore = create<Products>()(
 	devtools((set, get) => ({
-		baseMakeUp: [{ id: 0, category: 'baseMakeUp', brandName: '', productName: '', isProductEmptyError: 'normal' }],
-		bodyHair: [{ id: 0, category: 'bodyHair', brandName: '', productName: '', isProductEmptyError: 'normal' }],
-		detergent: [{ id: 0, category: 'detergent', brandName: '', productName: '', isProductEmptyError: 'normal' }],
-		ingredient: [{ id: 0, category: 'ingredient', brandName: '', productName: '', isProductEmptyError: 'normal' }],
-		etc: [{ id: 0, category: 'etc', brandName: '', productName: '', isProductEmptyError: 'normal' }],
+		baseMakeUp: [{ id: 0, category: '기초화장/세안', brandName: '', productName: '', isProductEmptyError: 'normal' }],
+		bodyHair: [{ id: 0, category: '바디/헤어', brandName: '', productName: '', isProductEmptyError: 'normal' }],
+		detergent: [{ id: 0, category: '세제', brandName: '', productName: '', isProductEmptyError: 'normal' }],
+		ingredient: [{ id: 0, category: '식재료', brandName: '', productName: '', isProductEmptyError: 'normal' }],
+		etc: [{ id: 0, category: '기타', brandName: '', productName: '', isProductEmptyError: 'normal' }],
 		addProduct: (productArrName: string) => {
 			if (get()[productArrName][0].productName !== '') {
 				set((state) => ({
 					[productArrName]: [
-						{ id: 0, category: productArrName, brandName: '', productName: '', isProductEmptyError: 'normal' },
+						{ id: 0, category: get()[productArrName][0].category, brandName: '', productName: '', isProductEmptyError: 'normal' },
 						...state[productArrName],
 					],
 				}));
@@ -140,11 +140,11 @@ export const productStore = create<Products>()(
 			for (let i = 0; i < items.length; i++) {
 				const productArr = items[i].category;
 				if (
-					productArr !== 'baseMakeUp' &&
-					productArr !== 'bodyHair' &&
-					productArr !== 'detergent' &&
-					productArr !== 'ingredient' &&
-					productArr !== 'etc'
+					productArr !== '기초화장 / 세안' &&
+					productArr !== '바디 / 헤어' &&
+					productArr !== '세제' &&
+					productArr !== '식재료' &&
+					productArr !== '기타'
 				)
 					continue;
 				set((state) => ({

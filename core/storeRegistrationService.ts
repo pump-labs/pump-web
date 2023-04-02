@@ -1,6 +1,39 @@
+import axios from 'axios';
 import { ItemsRequest } from 'hooks/api/items/usePostItems';
 import { MutableRefObject, RefObject } from 'react';
 import { Product } from 'store/actions/productStore';
+
+export interface IBusinessLicenseStatusResponse {
+	match_cnt: number;
+	request_cnt: number;
+	status_code: string;
+	data: Array<{
+		b_no: string;
+		b_stt: '01' | '02' | '03';
+		b_stt_cd: '01' | '02' | '03';
+		tax_type: string;
+		tax_type_cd: '1' | '2' | '3' | '4' | '5' | '6' | '7';
+		end_dt: string;
+		utcc_yn: 'Y' | 'N';
+		tax_type_change_dt: string;
+		invoice_apply_at: string;
+	}>;
+}
+export const handleFindCoords = async (storeAddress: string) => {
+	const location: string[] = [];
+	await axios
+		.get(`https://dapi.kakao.com/v2/local/search/address.json?query=${storeAddress}`, {
+			headers: {
+				Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_MAP_REST_KEY}`, // REST API 키
+			},
+		})
+		.then((res) => {
+			const address = res.data.documents[0].address;
+			location.push(address.x as string);
+			location.push(address.y as string);
+		});
+	return location;
+};
 
 export const extractBusinessLicenseExceptHyhpen = (businessLicense: string) => {
 	return businessLicense
@@ -72,19 +105,28 @@ export const makeBusinessHourData = (
 	selectedBusinessHourBtn: string,
 	setFunc: (inputId: string, inputValue: string) => void,
 ) => {
-	const businessHourArr: Array<{ day: string; time: string }> = [];
+	const businessHourArr: Array<{ day: string; time: string | null }> = [];
 	if (selectedBusinessHourBtn === 'weekDaysWeekEnd') {
 		for (let i = 0; i < 5; i++) {
-			businessHourArr.push({ day: businessHourDays[i].day, time: (refArr.current[0] as HTMLButtonElement).value });
+			businessHourArr.push({
+				day: businessHourDays[i].day,
+				time: (refArr.current[0] as HTMLButtonElement).value === 'null' ? null : (refArr.current[0] as HTMLButtonElement).value,
+			});
 		}
 		for (let i = 5; i < 7; i++) {
-			businessHourArr.push({ day: businessHourDays[i].day, time: (refArr.current[1] as HTMLButtonElement).value });
+			businessHourArr.push({
+				day: businessHourDays[i].day,
+				time: (refArr.current[1] as HTMLButtonElement).value === 'null' ? null : (refArr.current[1] as HTMLButtonElement).value,
+			});
 		}
 	} else {
 		for (let i = 0; i < 7; i++) {
 			businessHourArr.push({
 				day: businessHourDays[i].day,
-				time: (refArr.current[businessHourDays[i].id] as HTMLButtonElement).value,
+				time:
+					(refArr.current[businessHourDays[i].id] as HTMLButtonElement).value === 'null'
+						? null
+						: (refArr.current[businessHourDays[i].id] as HTMLButtonElement).value,
 			});
 		}
 	}
@@ -123,7 +165,19 @@ export const makeItemsRequest = (itemsArr: Product[]) => {
 	}
 	return itemsRequest;
 };
-
+export const makeItemsEditRequest = (itemsArr: Product[]) => {
+	const itemsRequest: ItemsRequest[] = [];
+	for (let i = 0; i < itemsArr.length; i++) {
+		const cur = itemsArr[i];
+		if (cur.brandName === '' && cur.productName === '') continue;
+		itemsRequest.push({
+			title: cur.productName !== '' ? cur.productName : null,
+			category: cur.category,
+			brand: cur.brandName !== '' ? cur.brandName : null,
+		});
+	}
+	return itemsRequest;
+};
 type StoreBusinessHour = {
 	day?: string;
 	time?: string;
