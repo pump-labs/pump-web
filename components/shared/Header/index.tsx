@@ -18,7 +18,7 @@ const Header = () => {
 	return (
 		<S.Container>
 			<StyledLayout.SubMaxContainer>
-				<S.GlobalNavigation>
+				<S.GlobalNavigation className="px-[1rem]">
 					<S.LogoWrapper href={'/'} hrefLang={'ko'}>
 						<span className="visually-hidden">Pump 사이트 로고 이미지</span>
 						<Image src={PumpLogo} alt="Pump Logo" width={110} height={50} priority />

@@ -4,7 +4,7 @@ import QueryProvider from 'app/Provider';
 import { Footer, Header } from 'components/shared';
 import { Provider } from 'jotai';
 import ProtectedRouteWithAuthContainer from 'pageComponents/app/ProtectedRouteWithAuthContainer';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from 'styles';
 import '../styles/globals.css';
 import StyledComponentsRegistry from './RootStyleRegistry';
@@ -23,7 +23,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
 								<ProtectedRouteWithAuthContainer>
 									<Header />
-									<ChildrenContainer>{children}</ChildrenContainer>
+									<div className="relative mt-[7.8rem] h-[100vh-25.8rem]">{children}</div>
 									<Footer />
 								</ProtectedRouteWithAuthContainer>
 							</ThemeProvider>
@@ -36,9 +36,3 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default RootLayout;
-
-const ChildrenContainer = styled.main`
-	position: relative;
-	min-height: calc(100vh - 258px);
-	margin-top: 78px;
-`;

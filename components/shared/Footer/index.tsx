@@ -1,8 +1,5 @@
-import { StyledLayout, Typography } from 'components/shared';
-import { Divider } from 'components/shared/styled/layout';
 import { InstagramIcon } from 'public/static/icons';
 import React from 'react';
-import theme from 'styles/theme';
 import * as S from './styled';
 
 const REFERENCE_LINKS = {
@@ -17,44 +14,34 @@ const SOCIAL_LINKS = {
 
 const Footer = () => {
 	return (
-		<S.Container>
-			<StyledLayout.SubMaxContainer>
-				<S.InnerWrapper display={'flex'} flexDirection={'column'} width={'100%'}>
-					<S.LinkContentsWrapper>
+		<div className="flex min-h-[18rem] border-t border-solid border-gray-2 bg-gray-0">
+			<div className="relative mx-auto w-full max-w-[99.6rem] px-[2rem]">
+				<div className="relative flex w-full flex-col pt-[2.4rem]">
+					<div className="mb-[1.4rem] flex h-full items-center">
 						<S.Anchor href={{ pathname: REFERENCE_LINKS.SERVICE_INTRODUCE }} target="_blank" rel="noreferrer">
-							<Typography variant="span" aggressive="body_oneline_003" color={theme.colors.gray_006}>
-								서비스 소개
-							</Typography>
+							<span className="text-body-4 text-gray-4 hover:text-primary">서비스 소개</span>
 						</S.Anchor>
-						<Divider direction="vertical" width="18px" height="1px" margin="0 10px 0 10px" color="#D9D9D9" />
+
+						<div className="mx-[0.8rem] h-[1.8rem] w-[0.1rem] bg-[#D9D9D9]" />
 						<S.Anchor href={{ pathname: REFERENCE_LINKS.SERVICE_TERMS }} target="_blank" rel="noreferrer">
-							<Typography variant="span" aggressive="body_oneline_003" color={theme.colors.gray_006}>
-								서비스 이용약관
-							</Typography>
+							<span className="text-body-4 text-gray-4 hover:text-primary">서비스 이용약관</span>
 						</S.Anchor>
-						<Divider direction="vertical" width="18px" height="1px" margin="0 10px 0 10px" color="#D9D9D9" />
+
+						<div className="mx-[0.8rem] h-[1.8rem] w-[0.1rem] bg-[#D9D9D9]" />
 						<S.Anchor href={{ pathname: REFERENCE_LINKS.SERVICE_POLICY }} target="_blank" rel="noreferrer">
-							<Typography variant="span" aggressive="tab_001" color={theme.colors.gray_006}>
-								개인정보 처리방침
-							</Typography>
+							<span className="text-tab-3 text-gray-4 hover:text-primary">개인정보 처리방침</span>
 						</S.Anchor>
-					</S.LinkContentsWrapper>
+					</div>
 
-					<Typography variant="h4" aggressive="body_oneline_003" color={theme.colors.gray_004} margin="0 0 40px 0">
-						bardchoi.pump@gmail.com
-					</Typography>
-					<Typography variant="h4" aggressive="body_oneline_003" color={theme.colors.gray_004}>
-						Copyright 2023. Pump All rights reserved.
-					</Typography>
+					<p className="mb-[0.8rem] text-body-4 text-gray-4">bardchoi.pump@gmail.com</p>
+					<p className="mb-[2.6rem] text-body-4 text-gray-4">Copyright 2023. Pump All rights reserved.</p>
 
-					<S.ChannelWrapper>
-						<S.Anchor href={{ pathname: SOCIAL_LINKS.INSTAGRAM }} target="_blank" rel="noreferrer">
-							<InstagramIcon className="social" />
-						</S.Anchor>
-					</S.ChannelWrapper>
-				</S.InnerWrapper>
-			</StyledLayout.SubMaxContainer>
-		</S.Container>
+					<S.Anchor href={{ pathname: SOCIAL_LINKS.INSTAGRAM }} target="_blank" rel="noreferrer">
+						<InstagramIcon className="social" />
+					</S.Anchor>
+				</div>
+			</div>
+		</div>
 	);
 };
 
