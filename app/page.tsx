@@ -83,26 +83,26 @@ const Root = () => {
 	return (
 		<div className="flex flex-col items-center">
 			<div
-				className="mb-[4.8rem] flex w-full flex-col pt-[4.8rem] md:mb-[6.8rem]"
+				className="mb-[4.8rem] flex w-full flex-col pt-[4.8rem] md:mb-[6.8rem] lg:flex-row lg:justify-center lg:gap-[6rem]"
 				style={{
 					background: 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #F9F9FB 100%)',
 				}}
 			>
-				<div className="flex flex-col px-[2rem]">
-					<h2 className="mb-[1.2rem] text-center text-heading-multi-3 md:text-heading-multi-2">
+				<div className="flex flex-col px-[2rem] lg:items-start lg:justify-center lg:px-0">
+					<h2 className="mb-[1.2rem] text-center text-heading-multi-3 md:text-heading-multi-2 lg:text-left lg:text-heading-multi-1">
 						리필스테이션,
 						<br />
 						Pump에서 알리세요!
 					</h2>
 
-					<p className="mb-[2rem] text-center text-body-multi-4 text-gray-6 md:mb-[3.2rem] md:text-body-multi-1">
+					<p className="mb-[2rem] text-center text-body-multi-4 text-gray-6 md:mb-[3.2rem] md:text-body-multi-1 lg:text-left lg:text-body-multi-0">
 						간편하게 가게 정보와 판매 상품을 등록하고
 						<br />더 많은 사람에게 리필스테이션의 가치를 전해보세요.
 					</p>
 
 					<div className="mx-auto flex flex-col gap-[0.6rem] md:flex-row">
 						<Link
-							className="hidden flex-1 rounded-lg border-primary bg-primary text-white hover:opacity-80 xl:!block"
+							className="hidden min-w-[15.2rem] rounded-lg border-primary bg-primary text-white hover:opacity-80 lg:flex lg:items-center lg:justify-center"
 							href={{
 								pathname: '/registration/step1',
 							}}
@@ -111,7 +111,7 @@ const Root = () => {
 						</Link>
 
 						<button
-							className="min-w-[14rem] rounded-lg bg-primary py-[1.3rem] text-button-1 text-white md:min-w-[15.2rem] xl:!hidden"
+							className="min-w-[14rem] rounded-lg bg-primary py-[1.3rem] text-button-1 text-white md:min-w-[15.2rem] lg:!hidden"
 							type="button"
 							onClick={() => changeModalKey(MODAL_KEY.ON_STORE_REGISTRATION_WARNING_IN_MOBILE)}
 						>
@@ -139,10 +139,10 @@ const Root = () => {
 				</div>
 			</div>
 
-			<div className="max-w-[99.6rem] flex-col px-[4rem] md:px-[5rem]">
-				<h3 className="mb-[3.2rem] text-center text-heading-3 text-gray-7">앱 주요 기능</h3>
+			<div className="max-w-[99.6rem] flex-col px-[4rem] md:px-[5rem] lg:px-0">
+				<h3 className="mb-[3.2rem] text-center text-heading-3 text-gray-7 lg:text-left lg:text-heading-2">앱 주요 기능</h3>
 
-				<div className="flex max-w-[32rem] flex-col items-center gap-[3.2rem] md:max-w-full md:flex-row md:gap-[2.1rem]">
+				<div className="flex max-w-[32rem] flex-col items-center gap-[3.2rem] md:max-w-full md:flex-row md:gap-[2.1rem] lg:gap-[4.8rem]">
 					{FEATURE_INTRO.map((feature) => {
 						const { id, imageSrc, title, description } = feature;
 						return (
@@ -161,23 +161,29 @@ const Root = () => {
 				</div>
 			</div>
 
-			<div className="mt-[12.8rem] flex flex-col items-center px-[2rem] md:px-0">
-				<h3 className="mb-[3.2rem] text-center text-heading-3 text-gray-7">입점 기대효과</h3>
+			<div className="mt-[12.8rem] flex w-full max-w-[99.6rem] flex-col items-center px-[2rem] md:px-[4.8rem] lg:px-0">
+				<h3 className="mb-[3.2rem] w-full text-center text-heading-3 text-gray-7 lg:text-left lg:text-heading-2">
+					입점 기대효과
+				</h3>
 
-				<div className="flex flex-col gap-[3.2rem] md:gap-[2.4rem]">
+				<div className="flex w-full flex-col items-center gap-[3.2rem] md:items-start md:gap-[2.4rem]">
 					{FEATURE_ADVANTAGE.map((advantage) => {
 						const { id, imageSrc, title, description } = advantage;
 						return (
-							<div key={id} className="flex flex-col gap-y-[2rem] md:flex-row md:gap-y-0 md:gap-x-[2.4rem]">
-								<div className="relative flex max-h-[18rem] max-w-[32rem] items-center justify-center rounded-[1.2rem] bg-gray-0 object-contain">
+							<div key={id} className="flex flex-col gap-y-[2rem] md:flex-row md:gap-y-0 md:gap-x-[2.4rem] lg:gap-x-[3.2rem]">
+								<div className="relative flex max-w-[32rem] items-center justify-center rounded-[1.2rem] bg-gray-0 object-contain md:max-w-[30rem] lg:max-w-[50rem]">
 									<MotionShowBox showDirection={'up'} delay={id}>
 										<Image src={imageSrc} alt={''} loading="lazy" />
 									</MotionShowBox>
 								</div>
 
 								<div className="flex flex-col items-center md:items-start md:justify-center">
-									<h4 className="mb-[0.6rem] text-center text-heading-4 text-gray-7">{title}</h4>
-									<p className="whitespace-pre-wrap text-body-multi-4 text-gray-6">{description}</p>
+									<h4 className="mb-[0.6rem] text-center text-heading-4 text-gray-7 md:mb-[0.8rem] lg:mb-[1.2rem] lg:whitespace-pre-wrap lg:text-left lg:text-heading-multi-2">
+										{title}
+									</h4>
+									<p className="whitespace-pre-wrap text-body-multi-4 text-gray-6 lg:text-left lg:text-body-multi-1">
+										{description}
+									</p>
 								</div>
 							</div>
 						);
@@ -185,7 +191,7 @@ const Root = () => {
 				</div>
 			</div>
 
-			<StyledLayout.FlexBox className="mt-[9.6rem] max-w-[99.6rem] flex-col px-[2rem] md:px-[4.8rem]">
+			<StyledLayout.FlexBox className="mt-[9.6rem] max-w-[99.6rem] flex-col px-[2rem] md:px-[4.8rem] lg:px-0">
 				<h3 className="mb-[3.2rem] text-center text-heading-3 text-gray-7">FAQ</h3>
 
 				<StyledLayout.FlexBox className="flex-col items-start gap-[3.2rem]">
@@ -194,7 +200,7 @@ const Root = () => {
 						return (
 							<div key={id} className="w-full">
 								<h4 className="text-heading-multi-6 text-gray-7">{title}</h4>
-								<div className="my-2 h-[1px] w-full bg-gray-2" />
+								<div className="my-2 h-[1px] w-full bg-gray-2 lg:mt-[2rem] lg:mb-[1.6rem]" />
 								<p className="whitespace-pre-wrap text-body-multi-4 text-gray-6">{description}</p>
 							</div>
 						);
@@ -202,7 +208,7 @@ const Root = () => {
 				</StyledLayout.FlexBox>
 			</StyledLayout.FlexBox>
 
-			<div className="mb-[4.8rem] mt-[4.0rem] flex w-full max-w-[99.6rem] px-[2rem] md:mt-[4.8rem] md:mb-[6.4rem] md:px-[4.8rem]">
+			<div className="mb-[4.8rem] mt-[4.0rem] flex w-full max-w-[99.6rem] px-[2rem] md:mt-[4.8rem] md:mb-[6.4rem] md:px-[4.8rem] lg:px-0">
 				<div className="flex w-full items-center rounded-xl bg-orange-1 p-[2.4rem] md:justify-center md:p-[3.2rem] lg:justify-between">
 					<p className="hidden text-heading-6 text-primary lg:!block pc:text-heading-3">
 						리필스테이션 홍보는 Pump에서 시작해보세요.
