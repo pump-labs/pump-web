@@ -68,7 +68,7 @@ export const useStep3Form = () => {
 		const request = makeItemsRequest([...baseMakeUp, ...bodyHair, ...detergent, ...ingredient, ...etc]);
 		await postItems(Number(query?.get('id')), request);
 		changeModalKey(MODAL_KEY.OFF);
-		router.push('/registration/success');
+		router.replace('/registration/success');
 	};
 
 	return {

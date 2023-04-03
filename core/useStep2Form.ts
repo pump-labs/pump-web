@@ -121,11 +121,11 @@ export const useStep2Form = () => {
 	const submitInputs = async () => {
 		await patchManager(step1Request);
 		const step2Response = await postStore(step2Request);
-		router.push(`/registration/step3?id=${step2Response.storeId}`);
+		router.replace(`/registration/step3?id=${step2Response.storeId}`);
 	};
 	const submitEditInputs = async () => {
 		const step2EditResponse = await patchStore({ ...step2Request, id: Number(query?.get('storeId')) });
-		router.push(`/mypage/store`);
+		router.replace(`/mypage/store`);
 	};
 	const handleSelectedStoreImageBtn = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (selectedStoreImageBtn === e.target.value) return;
