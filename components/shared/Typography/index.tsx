@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import * as S from './styled';
 
 type Props = {
+	className?: string;
 	variant: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'span' | 'div';
 	aggressive:
 		| 'headline_oneline_001'
@@ -38,9 +39,9 @@ type Props = {
 	whiteSpace?: 'normal' | 'nowrap' | 'pre' | 'pre-wrap';
 } & PropsWithChildren;
 
-const Typography = ({ children, variant, aggressive, ...props }: Props) => {
+const Typography = ({ className, children, variant, aggressive, ...props }: Props) => {
 	return (
-		<S.Component as={variant} aggressive={aggressive} {...props}>
+		<S.Component className={className} as={variant} aggressive={aggressive} {...props}>
 			{children}
 		</S.Component>
 	);

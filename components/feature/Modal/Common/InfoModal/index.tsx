@@ -30,7 +30,7 @@ const InfoMoal = (props: Props) => {
 				</Typography>
 			</p>
 
-			<div className={props.modalBtn.type === 'primary' ? 'modal-primary-btn-single-wrapper' : 'modal-btn-single-wrapper'}>
+			<div className="mt-[3.2rem] flex justify-center">
 				<LargeBtn
 					style={props.modalBtn.type === 'primary' ? style.btnStyle.primary_btn_001 : style.btnStyle.black_btn}
 					onClick={props.modalBtn.onClick}

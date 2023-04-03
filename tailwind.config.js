@@ -43,6 +43,7 @@ module.exports = {
 				'body-3': ['1.5rem', { lineHeight: '1.7rem', fontWeight: 'normal', letterSpacing: '-0.04rem' }],
 				'body-4': ['1.4rem', { lineHeight: '1.6rem', fontWeight: 'normal', letterSpacing: '-0.04rem' }],
 				'body-5': ['1.3rem', { lineHeight: '1.5rem', fontWeight: 'normal', letterSpacing: '-0.04rem' }],
+				'body-multi-0': ['1.9rem', { lineHeight: '3.0rem', fontWeight: 'normal', letterSpacing: '-0.04rem' }],
 				'body-multi-1': ['1.7rem', { lineHeight: '2.6rem', fontWeight: 'normal', letterSpacing: '-0.04rem' }],
 				'body-multi-2': ['1.6rem', { lineHeight: '2.5rem', fontWeight: 'normal', letterSpacing: '-0.04rem' }],
 				'body-multi-3': ['1.5rem', { lineHeight: '2.4rem', fontWeight: 'normal', letterSpacing: '-0.04rem' }],

@@ -98,7 +98,7 @@ type DividerProps = {
 	direction: 'vertical' | 'horizontal';
 	width: string;
 	height: string;
-	margin: string;
+	margin?: string;
 	color: string;
 };
 

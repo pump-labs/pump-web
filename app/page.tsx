@@ -1,8 +1,7 @@
 'use client';
 
-import { StyledLayout, Typography } from 'components/shared';
+import StoreRegistrationWarningInMobile from 'components/feature/Modal/StoreRegistrationWarningInMobile';
 import { MotionShowBox } from 'components/shared/Motion';
-import { Divider } from 'components/shared/styled/layout';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -14,8 +13,7 @@ import {
 	LandingFeature002Img,
 	LandingFeature003Img,
 } from 'public/static/images';
-import styled, { CSSProperties } from 'styled-components';
-import { theme } from 'styles';
+import useModalStore, { MODAL_KEY } from 'store/actions/modalStore';
 import '../styles/globals.css';
 
 const SERVICE_INTRODUCE_PDF_LINK = 'https://drive.google.com/file/d/1f40Y7fdPCTnH83JgiIMmdeFb_igRMUBP/view';
@@ -78,251 +76,176 @@ const FEATURE_FAQ = [
 ] as const;
 
 const Root = () => {
+	const modalKey = useModalStore((state) => state.modalKey);
+	const changeModalKey = useModalStore((state) => state.changeModalKey);
+
 	return (
-		<StyledLayout.FlexBox flexDirection="column" alignItems="center">
-			<StyledLayout.FlexBox
-				justifyContent="center"
-				gap="78px"
-				width="100%"
-				margin="0 auto"
-				padding="80px 0 0 0"
-				background="linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #F9F9FB 100%)"
+		<div className="flex flex-col items-center">
+			<div
+				className="mb-[4.8rem] flex w-full flex-col pt-[4.8rem] md:mb-[6.8rem] lg:flex-row lg:justify-center lg:gap-[6rem]"
+				style={{
+					background: 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #F9F9FB 100%)',
+				}}
 			>
-				<StyledLayout.FlexBox flexDirection="column">
-					<Typography variant="h2" aggressive="headline_multiline_001" align="left" padding="48px 0 24px 0">
+				<div className="flex flex-col px-[2rem] lg:items-start lg:justify-center lg:px-0">
+					<h2 className="mb-[1.2rem] text-center text-heading-multi-3 md:text-heading-multi-2 lg:text-left lg:text-heading-multi-1">
 						리필스테이션,
 						<br />
 						Pump에서 알리세요!
-					</Typography>
-					<Typography variant="p" aggressive="body_multiline_000" align="left" padding="0 0 48px 0" color={theme.colors.gray_006}>
+					</h2>
+
+					<p className="mb-[2rem] text-center text-body-multi-4 text-gray-6 md:mb-[3.2rem] md:text-body-multi-1 lg:text-left lg:text-body-multi-0">
 						간편하게 가게 정보와 판매 상품을 등록하고
 						<br />더 많은 사람에게 리필스테이션의 가치를 전해보세요.
-					</Typography>
+					</p>
 
-					<StyledLayout.FlexBox width="480px" height="52px" gap="6px">
-						<StyledLinkBtn
+					<div className="mx-auto flex flex-col gap-[0.6rem] md:flex-row">
+						<Link
+							className="hidden min-w-[15.2rem] rounded-lg border-primary bg-primary text-white hover:opacity-80 lg:flex lg:items-center lg:justify-center"
 							href={{
 								pathname: '/registration/step1',
 							}}
-							flex={1}
-							border={`1px solid ${theme.colors.primary_010}`}
-							borderradius={'8px'}
-							backgroundcolor={theme.colors.primary_010}
-							color={theme.colors.white}
-							hoveropacity={'0.8'}
 						>
-							<Typography variant="span" aggressive="button_000">
-								입점 신청
-							</Typography>
-						</StyledLinkBtn>
-						<StyledLinkBtn
+							<span className="text-button-0">입점 신청</span>
+						</Link>
+
+						<button
+							className="min-w-[14rem] rounded-lg bg-primary py-[1.3rem] text-button-1 text-white md:min-w-[15.2rem] lg:!hidden"
+							type="button"
+							onClick={() => changeModalKey(MODAL_KEY.ON_STORE_REGISTRATION_WARNING_IN_MOBILE)}
+						>
+							입점 신청
+						</button>
+
+						<Link
+							className="flex min-w-[14rem] items-center justify-center rounded-lg border border-solid border-gray-2 bg-white py-[1.2rem] text-gray-6 hover:bg-gray-1 md:min-w-[15.2rem]"
 							href={{ pathname: SERVICE_INTRODUCE_PDF_LINK }}
 							target={'_blank'}
-							flex={1}
-							border={`1px solid ${theme.colors.gray_002}`}
-							borderradius={'8px'}
-							backgroundcolor={theme.colors.white}
-							hoverbackgroundcolor={theme.colors.gray_001}
-							color={theme.colors.gray_006}
 						>
-							<Typography variant="span" aggressive="button_000">
-								서비스 소개서
-							</Typography>
-						</StyledLinkBtn>
-						<StyledLinkBtn href={{ pathname: SERVICE_APP_STORE_LINK }} target={'_blank'} className="!hidden pc:!flex">
-							<Image src={AppStoreDownloadImg} alt="app store" width={156} height={52} />
-						</StyledLinkBtn>
-					</StyledLayout.FlexBox>
-				</StyledLayout.FlexBox>
+							<span className="text-button-1 text-gray-6">서비스 소개서</span>
+						</Link>
 
-				<StyledLayout.FlexBox>
+						<Link href={{ pathname: SERVICE_APP_STORE_LINK }} target={'_blank'} className="hidden md:block">
+							<Image src={AppStoreDownloadImg} alt="app store" width={152} height={52} />
+						</Link>
+					</div>
+				</div>
+
+				<div className="flex justify-center">
 					<MotionShowBox showDirection={'up'}>
 						<Image src={LandingAppImg} alt="" width={440} height={504} loading="lazy" />
 					</MotionShowBox>
-				</StyledLayout.FlexBox>
-			</StyledLayout.FlexBox>
+				</div>
+			</div>
 
-			<StyledLayout.FlexBox flexDirection="column" width="996px" margin="64px 0 0 0">
-				<Typography variant="h2" aggressive="headline_oneline_002" margin="0 0 32px 0" color={theme.colors.gray_007}>
-					앱 주요 기능
-				</Typography>
+			<div className="max-w-[99.6rem] flex-col px-[4rem] md:px-[5rem] lg:px-0">
+				<h3 className="mb-[3.2rem] text-center text-heading-3 text-gray-7 lg:text-left lg:text-heading-2">앱 주요 기능</h3>
 
-				<StyledLayout.FlexBox gap="48px" whiteSpace="pre-wrap">
+				<div className="flex max-w-[32rem] flex-col items-center gap-[3.2rem] md:max-w-full md:flex-row md:gap-[2.1rem] lg:gap-[4.8rem]">
 					{FEATURE_INTRO.map((feature) => {
 						const { id, imageSrc, title, description } = feature;
 						return (
-							<Card key={id}>
-								<BackgroundBox
-									alignItems={'center'}
-									justifyContent={'center'}
-									width="300px"
-									height="300px"
-									margin="0 0 32px 0"
-									backgroundColor={theme.colors.gray_000}
-								>
+							<div key={id} className="flex-1">
+								<div className="relative mb-[3.2rem] flex w-full items-center justify-center rounded-[1.2rem] bg-gray-0 object-cover">
 									<MotionShowBox showDirection={'up'} delay={id}>
-										<Image src={imageSrc} alt={''} width={300} height={300} loading="lazy" />
+										<Image src={imageSrc} alt={''} loading="lazy" />
 									</MotionShowBox>
-								</BackgroundBox>
+								</div>
 
-								<Typography
-									variant="h3"
-									aggressive="headline_oneline_003"
-									margin="0 0 12px 0"
-									align="center"
-									color={theme.colors.gray_007}
-								>
-									{title}
-								</Typography>
-								<Typography variant="p" aggressive="body_multiline_002" align="center" color={theme.colors.gray_006}>
-									{description}
-								</Typography>
-							</Card>
-						);
-					})}
-				</StyledLayout.FlexBox>
-			</StyledLayout.FlexBox>
-
-			<StyledLayout.FlexBox flexDirection="column" width="996px" margin="128px 0 0 0">
-				<Typography variant="h2" aggressive="headline_oneline_002" margin="0 0 32px 0" color={theme.colors.gray_007}>
-					입점 기대효과
-				</Typography>
-
-				{FEATURE_ADVANTAGE.map((advantage) => {
-					const { id, imageSrc, title, description } = advantage;
-					return (
-						<StyledLayout.FlexBox key={id} gap="32px" margin="0 0 48px 0" whiteSpace="pre-wrap">
-							<BackgroundBox
-								alignItems={'center'}
-								justifyContent={'center'}
-								width="500px"
-								height="280px"
-								backgroundColor={theme.colors.gray_000}
-							>
-								<MotionShowBox showDirection={'up'} delay={id}>
-									<Image src={imageSrc} alt={''} width={500} height={280} loading="lazy" />
-								</MotionShowBox>
-							</BackgroundBox>
-
-							<StyledLayout.FlexBox flexDirection="column" justifyContent="center">
-								<Typography
-									variant="h3"
-									aggressive="headline_multiline_002"
-									margin="0 0 12px 0"
-									align="left"
-									color={theme.colors.gray_007}
-								>
-									{title}
-								</Typography>
-								<Typography variant="p" aggressive="body_multiline_001" align="left" color={theme.colors.gray_006}>
-									{description}
-								</Typography>
-							</StyledLayout.FlexBox>
-						</StyledLayout.FlexBox>
-					);
-				})}
-			</StyledLayout.FlexBox>
-
-			<StyledLayout.FlexBox flexDirection="column" width="996px" margin="128px 0 0 0">
-				<Typography variant="h2" aggressive="headline_oneline_002" margin="0 0 48px 0" color={theme.colors.gray_007}>
-					FAQ
-				</Typography>
-
-				<StyledLayout.FlexBox flexDirection="column" alignItems="start" gap="48px">
-					{FEATURE_FAQ.map((faq) => {
-						const { id, title, description } = faq;
-						return (
-							<div key={id}>
-								<Typography variant="h4" aggressive="headline_oneline_004" color={theme.colors.gray_006}>
-									{title}
-								</Typography>
-								<Divider direction="horizontal" width="996px" height="1px" margin="20px 0 16px 0" color={theme.colors.gray_002} />
-								<Typography variant="p" aggressive="body_multiline_001" color={theme.colors.gray_006} whiteSpace={'pre-wrap'}>
-									{description}
-								</Typography>
+								<h3 className="mb-[0.6rem] whitespace-pre-wrap text-center text-heading-4 text-gray-7">{title}</h3>
+								<p className=" whitespace-pre-wrap text-center text-body-multi-4 text-gray-6">{description}</p>
 							</div>
 						);
 					})}
-				</StyledLayout.FlexBox>
-			</StyledLayout.FlexBox>
-
-			<div className="mb-[4.8rem] mt-[4.0rem] flex w-full max-w-[99.6rem] pc:mt-[9.6rem] pc:mb-[8.8rem]">
-				<BackgroundBox
-					alignItems="center"
-					justifyContent="space-between"
-					width="100%"
-					padding="34px 48px"
-					backgroundColor={theme.colors.primary_001}
-					className="!justify-center !px-[2.4rem] !py-[2.4rem] pc:!justify-between pc:!py-[4.7rem] pc:!px-[4.8rem]"
-				>
-					<h3 className="text-heading-6 text-primary pc:text-heading-3">리필스테이션 홍보는 Pump에서 시작해보세요.</h3>
-
-					<StyledLinkBtn
-						href={'/registration/step1'}
-						padding="16px 47px"
-						border={`1px solid ${theme.colors.primary_010}`}
-						borderradius={'8px'}
-						backgroundcolor={theme.colors.primary_010}
-						color={theme.colors.white}
-						hoveropacity={'0.8'}
-						className="!hidden pc:!block"
-					>
-						<Typography variant="span" aggressive="button_000">
-							입점 신청
-						</Typography>
-					</StyledLinkBtn>
-				</BackgroundBox>
+				</div>
 			</div>
 
-			<div className="w-full justify-center bg-gray-1 px-[2rem] py-[4.8rem] text-center pc:hidden">
-				<h3 className="mb-[0.8rem]  text-heading-multi-4 text-gray-7">
+			<div className="mt-[12.8rem] flex w-full max-w-[99.6rem] flex-col items-center px-[2rem] md:px-[4.8rem] lg:px-0">
+				<h3 className="mb-[3.2rem] w-full text-center text-heading-3 text-gray-7 lg:text-left lg:text-heading-2">
+					입점 기대효과
+				</h3>
+
+				<div className="flex w-full flex-col items-center gap-[3.2rem] md:items-start md:gap-[2.4rem]">
+					{FEATURE_ADVANTAGE.map((advantage) => {
+						const { id, imageSrc, title, description } = advantage;
+						return (
+							<div key={id} className="flex flex-col gap-y-[2rem] md:flex-row md:gap-y-0 md:gap-x-[2.4rem] lg:gap-x-[3.2rem]">
+								<div className="relative flex max-w-[32rem] items-center justify-center rounded-[1.2rem] bg-gray-0 object-contain md:max-w-[30rem] lg:max-w-[50rem]">
+									<MotionShowBox showDirection={'up'} delay={id}>
+										<Image src={imageSrc} alt={''} loading="lazy" />
+									</MotionShowBox>
+								</div>
+
+								<div className="flex flex-col items-center md:items-start md:justify-center">
+									<h4 className="mb-[0.6rem] text-center text-heading-4 text-gray-7 md:mb-[0.8rem] lg:mb-[1.2rem] lg:whitespace-pre-wrap lg:text-left lg:text-heading-multi-2">
+										{title}
+									</h4>
+									<p className="whitespace-pre-wrap text-body-multi-4 text-gray-6 lg:text-left lg:text-body-multi-1">
+										{description}
+									</p>
+								</div>
+							</div>
+						);
+					})}
+				</div>
+			</div>
+
+			<div className="mt-[9.6rem] flex max-w-[99.6rem] flex-col px-[2rem] md:px-[4.8rem] lg:px-0">
+				<h3 className="mb-[3.2rem] text-center text-heading-3 text-gray-7">FAQ</h3>
+
+				<div className="flex flex-col items-start gap-[3.2rem]">
+					{FEATURE_FAQ.map((faq) => {
+						const { id, title, description } = faq;
+						return (
+							<div key={id} className="w-full">
+								<h4 className="text-heading-multi-6 text-gray-7">{title}</h4>
+								<div className="my-2 h-[1px] w-full bg-gray-2 lg:mt-[2rem] lg:mb-[1.6rem]" />
+								<p className="whitespace-pre-wrap text-body-multi-4 text-gray-6">{description}</p>
+							</div>
+						);
+					})}
+				</div>
+			</div>
+
+			<div className="mb-[4.8rem] mt-[4.0rem] flex w-full max-w-[99.6rem] px-[2rem] md:mt-[4.8rem] md:mb-[6.4rem] md:px-[4.8rem] lg:px-0">
+				<div className="flex w-full items-center rounded-xl bg-orange-1 p-[2.4rem] md:justify-center md:p-[3.2rem] lg:justify-between">
+					<p className="hidden text-heading-6 text-primary lg:!block pc:text-heading-3">
+						리필스테이션 홍보는 Pump에서 시작해보세요.
+					</p>
+					<p className="mx-auto text-center text-heading-6 text-primary md:text-heading-4 lg:!hidden">
+						입점 신청은 PC에서 가능합니다.
+					</p>
+
+					<Link
+						className="hidden rounded-lg border border-solid border-primary bg-primary px-[4.7rem] py-[1.6rem] text-white hover:opacity-80 lg:!block"
+						href={{
+							pathname: '/registration/step1',
+						}}
+					>
+						<span className="text-button-0">입점 신청</span>
+					</Link>
+				</div>
+			</div>
+
+			<div className="w-full justify-center bg-gray-1 px-[2rem] py-[4.8rem] text-center md:hidden pc:hidden">
+				<h3 className="mb-[0.8rem] text-heading-multi-4 text-gray-7">
 					Pump 서비스를
 					<br />
 					직접 사용해보고 싶으신가요 ?
 				</h3>
-				<p className="mb-[2rem]  text-body-4 text-gray-6">애플 앱 스토어에서 다운받을 수 있어요.</p>
 
-				<StyledLinkBtn href={{ pathname: SERVICE_APP_STORE_LINK }} target={'_blank'}>
-					<Image src={AppStoreDownloadImg} alt="app store" width={156} height={52} />
-				</StyledLinkBtn>
+				<p className="mb-[2rem] text-body-4 text-gray-6">애플 앱 스토어에서 다운받을 수 있어요.</p>
+
+				<Link className="flex justify-center" href={{ pathname: SERVICE_APP_STORE_LINK }} target={'_blank'}>
+					<Image src={AppStoreDownloadImg} alt="app store" width={152} height={52} />
+				</Link>
 			</div>
-		</StyledLayout.FlexBox>
+
+			{modalKey === MODAL_KEY.ON_STORE_REGISTRATION_WARNING_IN_MOBILE && (
+				<StoreRegistrationWarningInMobile onClick={() => changeModalKey(MODAL_KEY.OFF)} />
+			)}
+		</div>
 	);
 };
 
 export default Root;
-
-type LinkBtnProps = {
-	borderradius?: string;
-	backgroundcolor?: string;
-	hoveropacity?: string;
-	hoverbackgroundcolor?: string;
-} & CSSProperties;
-
-const StyledLinkBtn = styled(Link)<LinkBtnProps>`
-	flex: ${({ flex }) => flex};
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: ${({ padding }) => padding};
-	border: ${({ border }) => border};
-	border-radius: ${({ borderradius }) => borderradius};
-	background-color: ${({ backgroundcolor }) => backgroundcolor};
-	color: ${({ color }) => color};
-
-	&:hover {
-		background-color: ${({ hoverbackgroundcolor }) => hoverbackgroundcolor};
-		opacity: ${({ hoveropacity }) => hoveropacity};
-	}
-`;
-
-const Card = styled.div`
-	flex: 1;
-`;
-
-const BackgroundBox = styled(StyledLayout.FlexBox)`
-	position: relative;
-	border-radius: 12px;
-	background-color: ${({ backgroundColor }) => backgroundColor};
-	object-fit: contain;
-`;

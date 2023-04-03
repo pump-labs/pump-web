@@ -18,16 +18,20 @@ const Header = () => {
 	return (
 		<S.Container>
 			<StyledLayout.SubMaxContainer>
-				<S.GlobalNavigation>
+				<S.GlobalNavigation className="px-[1rem]">
 					<S.LogoWrapper href={'/'} hrefLang={'ko'}>
-						<span className="visually-hidden">Pump 사이트 로고 이미지</span>
-						<Image src={PumpLogo} alt="Pump Logo" width={110} height={50} priority />
+						<Image src={PumpLogo} alt="Pump 로고 이미지" width={110} height={50} priority />
 					</S.LogoWrapper>
 
-					<StyledLayout.UnorderList gap={'40px'} className="!hidden pc:!flex">
+					<StyledLayout.UnorderList gap={'40px'} className="!hidden lg:!flex">
 						{!userSession?.id && (
 							<S.NavigationItem>
-								<StyledLayout.LinkWrapper href={'/signin'} replace>
+								<StyledLayout.LinkWrapper
+									href={{
+										pathname: '/signin',
+									}}
+									replace
+								>
 									<Typography variant="h2" aggressive="button_001" color={theme.colors.gray_005}>
 										로그인
 									</Typography>
@@ -38,14 +42,24 @@ const Header = () => {
 						{userSession?.id && (
 							<>
 								<S.NavigationItem>
-									<StyledLayout.LinkWrapper href={'/mypage/store'}>
+									<StyledLayout.LinkWrapper
+										href={{
+											pathname: '/mypage/store',
+										}}
+									>
 										<Typography variant="h2" aggressive="button_001" color={theme.colors.gray_005}>
 											마이페이지
 										</Typography>
 									</StyledLayout.LinkWrapper>
 								</S.NavigationItem>
 								<S.NavigationItem>
-									<Link href="/" target="_top" onClick={handleLogoutClick}>
+									<Link
+										href={{
+											pathname: '/',
+										}}
+										target="_top"
+										onClick={handleLogoutClick}
+									>
 										<Typography variant="h2" aggressive="button_001" color={theme.colors.gray_005}>
 											로그아웃
 										</Typography>
