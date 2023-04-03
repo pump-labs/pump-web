@@ -64,7 +64,7 @@ export const step2ErrorStore = create<Step2Error>()(
 					imgPath: { value: [data.imgStore?.at(0)?.path ?? ''], isError: 'normal' },
 					instaAccount: data.instaAccount ?? '',
 					callNumber: { value: data.callNumber ?? '', isError: 'normal' },
-					registrationNumber: { value: data.registrationNumber ?? '', isError: 'normal' },
+					registrationNumber: { value: data.registrationNumber ?? '', isError: 'success' },
 				}));
 			}
 		},
